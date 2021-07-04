@@ -4,11 +4,11 @@ const app=express()
 const server=http.createServer(app)
 const io=require("socket.io")(server,{
 cors:{
-    origin:"http://localhost:3000",
+    origin:"*",
     methods:["GET","POST"]
 }
 })
-
+const PORT=process.env.PORT || 5000;
 
 io.on("connection",(socket)=>{
     socket.emit("me",socket.id);
@@ -27,6 +27,10 @@ io.on("connection",(socket)=>{
 	})
 })
 
-server.listen(5000,()=>{
-    console.log("app running in 5000 port")
+app.get("/",(req,res)=>{
+    res.send("server is running");
+})
+
+server.listen(PORT,()=>{
+    console.log("app running")
 })
